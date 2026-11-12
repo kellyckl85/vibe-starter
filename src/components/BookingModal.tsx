@@ -142,40 +142,40 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 <span className="font-bold text-emerald-600 dark:text-emerald-400">First-Time Trial</span>
               </div>
 
-              {/* 1. Housing Type Selector */}
+              {/* 1. Housing Type Selector with Clear Pricing */}
               <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500">
-                  1. Select Housing Type (Singapore)
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                    Step 1: Choose Your Home Type
+                  </label>
+                  <span className="text-[11px] text-slate-500 font-medium">Standard 3 to 4-hour sessions</span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                   {(
                     [
-                      'HDB 3-Room',
-                      'HDB 4-Room',
-                      'HDB 5-Room / Exec',
-                      'Condo (1-2 Bed)',
-                      'Condo (3+ Bed)',
-                      'Landed Property',
+                      { type: 'HDB 3-Room', desc: '~65 sqm · 3 hrs', est: 'S$72' },
+                      { type: 'HDB 4-Room', desc: '~90 sqm · 3.5 hrs', est: 'S$84' },
+                      { type: 'HDB 5-Room / Exec', desc: '~115 sqm · 4 hrs', est: 'S$96' },
+                      { type: 'Condo (1-2 Bed)', desc: '~60 sqm · 3 hrs', est: 'S$72' },
+                      { type: 'Condo (3+ Bed)', desc: '~110 sqm · 4 hrs', est: 'S$96' },
+                      { type: 'Landed Property', desc: 'Multi-storey · 5 hrs', est: 'S$120' },
                     ] as const
-                  ).map(type => (
+                  ).map(item => (
                     <button
-                      key={type}
+                      key={item.type}
                       type="button"
-                      onClick={() => handleHousingChange(type)}
-                      className={`p-2.5 rounded-lg border text-left text-xs font-semibold transition-all cursor-pointer ${
-                        form.housingType === type
-                          ? 'border-blue-600 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 shadow-xs'
-                          : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:border-slate-300'
+                      onClick={() => handleHousingChange(item.type as any)}
+                      className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                        form.housingType === item.type
+                          ? 'border-blue-600 bg-blue-50/70 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 shadow-sm ring-2 ring-blue-600/20'
+                          : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
                       }`}
                     >
-                      <div>{type}</div>
-                      <div className="text-[10px] text-slate-400 font-normal mt-0.5">
-                        {type === 'HDB 3-Room' && '~65 sqm · 3 hrs'}
-                        {type === 'HDB 4-Room' && '~90 sqm · 3.5 hrs'}
-                        {type === 'HDB 5-Room / Exec' && '~115 sqm · 4 hrs'}
-                        {type === 'Condo (1-2 Bed)' && '~60 sqm · 3 hrs'}
-                        {type === 'Condo (3+ Bed)' && '~110 sqm · 4 hrs'}
-                        {type === 'Landed Property' && 'Multi-storey · 5 hrs'}
+                      <div className="font-bold text-xs">{item.type}</div>
+                      <div className="text-[11px] text-slate-500 mt-0.5">{item.desc}</div>
+                      <div className="text-[11px] font-mono font-bold text-slate-900 dark:text-white mt-1">
+                        From {item.est}
                       </div>
                     </button>
                   ))}
@@ -184,34 +184,35 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
               {/* 2. Service Tier */}
               <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500">
-                  2. Choose Service Tier
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                  Step 2: Cleaning Frequency
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   {(
                     [
-                      { id: 'Regular Weekly Clean', label: 'Regular Weekly Cleaning', note: 'S$24/hr (15% Savings)', badge: 'Most Popular' },
-                      { id: 'Bi-Weekly Clean', label: 'Bi-Weekly Cleaning', note: 'S$26/hr (10% Savings)', badge: 'Flexible' },
-                      { id: 'One-Time Deep Clean', label: 'Deep Steam Sanitization', note: 'From S$180 flat', badge: 'Intensive' },
-                      { id: 'Move-In / Move-Out Clean', label: 'Tenancy Handover Clean', note: 'S$260 · Deposit Guarantee', badge: 'Handover Pass' },
-                      { id: 'Airbnb Turnover', label: 'Airbnb Fast Turnover', note: 'S$110 · 3-Hour Rapid', badge: 'Host Special' },
+                      { id: 'Regular Weekly Clean', label: 'Regular Weekly (15% OFF)', note: 'S$24/hr · Dedicated helper every week', popular: true },
+                      { id: 'Bi-Weekly Clean', label: 'Every 2 Weeks (10% OFF)', note: 'S$26/hr · Twice a month freshen-up', popular: false },
+                      { id: 'One-Time Deep Clean', label: 'One-Time Deep Clean', note: 'From S$180 flat · Steam sanitization', popular: false },
+                      { id: 'Move-In / Move-Out Clean', label: 'Tenancy Handover Clean', note: 'S$260 flat · Deposit pass guarantee', popular: false },
                     ] as const
                   ).map(srv => (
                     <button
                       key={srv.id}
                       type="button"
-                      onClick={() => setForm({ ...form, serviceType: srv.id })}
-                      className={`p-3 rounded-lg border text-left transition-all cursor-pointer ${
+                      onClick={() => setForm({ ...form, serviceType: srv.id as any })}
+                      className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                         form.serviceType === srv.id
-                          ? 'border-blue-600 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400'
-                          : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:border-slate-300'
+                          ? 'border-blue-600 bg-blue-50/70 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 shadow-xs'
+                          : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
                       }`}
                     >
                       <div className="flex items-center justify-between font-bold">
                         <span>{srv.label}</span>
-                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
-                          {srv.badge}
-                        </span>
+                        {srv.popular && (
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">
+                            Most Popular
+                          </span>
+                        )}
                       </div>
                       <div className="text-[11px] text-slate-500 mt-1">{srv.note}</div>
                     </button>

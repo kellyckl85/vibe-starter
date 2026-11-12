@@ -11,7 +11,9 @@ import {
   Sparkles,
   ChevronRight,
   CheckCircle2,
-  Share2,
+  Clock,
+  ThumbsUp,
+  Tag,
 } from 'lucide-react';
 
 interface InstagramFeedAdProps {
@@ -36,24 +38,23 @@ export const InstagramFeedAd: React.FC<InstagramFeedAdProps> = ({
   };
 
   const handleShare = () => {
-    setToastMessage('Ad Link copied to clipboard!');
+    setToastMessage('Link copied! Ready to share with family.');
     setTimeout(() => setToastMessage(null), 2500);
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden text-slate-900 dark:text-slate-100 font-sans transition-all">
+    <div className="w-full max-w-md mx-auto bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden text-slate-900 dark:text-slate-100 font-sans transition-all">
       {/* 1. Instagram Post Header */}
-      <div className="flex items-center justify-between px-3.5 py-3 border-b border-slate-100 dark:border-slate-800">
-        <div className="flex items-center gap-2.5">
-          {/* Brand Avatar with Instagram Story Gradient Ring */}
+      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex items-center gap-3">
           <div className="relative p-0.5 rounded-full bg-linear-to-tr from-amber-500 via-rose-500 to-purple-600">
-            <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-extrabold text-xs shadow-xs">
+            <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-xs shadow-xs">
               SC
             </div>
           </div>
 
           <div className="leading-tight">
-            <div className="flex items-center gap-1 font-bold text-xs text-slate-900 dark:text-white">
+            <div className="flex items-center gap-1.5 font-bold text-xs text-slate-900 dark:text-white">
               <span>sparkclean.sg</span>
               <span className="w-3.5 h-3.5 rounded-full bg-blue-500 text-white flex items-center justify-center text-[9px] font-bold">
                 ✓
@@ -66,54 +67,90 @@ export const InstagramFeedAd: React.FC<InstagramFeedAdProps> = ({
         </div>
 
         <button className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 cursor-pointer">
-          <MoreHorizontal className="w-4 h-4" />
+          <MoreHorizontal className="w-5 h-5" />
         </button>
       </div>
 
-      {/* 2. Primary Media: Interactive Before/After Visualizer */}
-      <div className="relative w-full bg-slate-950">
-        <BeforeAfterSlider />
+      {/* 2. Catchy Consumer Headline Banner */}
+      <div className="px-4 py-3 bg-linear-to-r from-blue-50 via-teal-50 to-indigo-50 dark:from-slate-800/80 dark:to-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-1">
+            <Sparkles className="w-3 h-3" /> Singapore Home Cleaning
+          </span>
+          <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+            From S$22 / hour
+          </span>
+        </div>
+        <h3 className="text-sm font-extrabold text-slate-900 dark:text-white leading-tight">
+          {creative.headline}
+        </h3>
+      </div>
 
-        {/* Floating Trust Stamp Overlay */}
-        <div className="absolute top-3 left-3 z-30 pointer-events-none flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-950/80 border border-white/20 text-white text-[11px] font-bold backdrop-blur-xs">
-          <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-          <span>NEA Licensed Cleaners</span>
+      {/* 3. Primary Media: Interactive Before/After Visualizer */}
+      <div className="p-3 bg-slate-50 dark:bg-slate-950">
+        <BeforeAfterSlider />
+      </div>
+
+      {/* 4. Consumer 3-Step "How It Works" Bar */}
+      <div className="grid grid-cols-3 gap-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border-y border-slate-100 dark:border-slate-800 text-center">
+        <div className="space-y-0.5">
+          <div className="text-[10px] font-bold text-blue-600 dark:text-blue-400">1. Book in 60s</div>
+          <div className="text-[10px] text-slate-500">Pick date & time</div>
+        </div>
+        <div className="space-y-0.5 border-x border-slate-200 dark:border-slate-700 px-1">
+          <div className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400">2. Pro Arrives</div>
+          <div className="text-[10px] text-slate-500">NEA staff + eco supplies</div>
+        </div>
+        <div className="space-y-0.5">
+          <div className="text-[10px] font-bold text-purple-600 dark:text-purple-400">3. Relax & Rest</div>
+          <div className="text-[10px] text-slate-500">100% clean guarantee</div>
         </div>
       </div>
 
-      {/* 3. High-Converting Call To Action Strip */}
-      <button
-        onClick={onOpenBooking}
-        className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold text-xs flex items-center justify-between transition-colors cursor-pointer group shadow-md"
-      >
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-amber-300 animate-spin" style={{ animationDuration: '4s' }} />
-          <span>{creative.ctaLabel} · Use Code <strong className="text-amber-300 font-mono tracking-wider">{creative.promoCode}</strong></span>
-        </div>
-        <div className="flex items-center gap-1 text-[11px] font-semibold text-blue-100 group-hover:translate-x-1 transition-transform">
-          <span>{creative.discountValue}</span>
-          <ChevronRight className="w-4 h-4" />
-        </div>
-      </button>
+      {/* 5. Big High-Converting CTA Button */}
+      <div className="p-3.5 bg-white dark:bg-slate-900">
+        <button
+          onClick={onOpenBooking}
+          className="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-[0.99] text-white font-extrabold text-xs sm:text-sm flex items-center justify-between transition-all cursor-pointer shadow-lg shadow-blue-500/25 group"
+        >
+          <div className="flex items-center gap-2">
+            <Tag className="w-4 h-4 text-amber-300" />
+            <span>Book Now · S$20 OFF First Clean</span>
+          </div>
+          <div className="flex items-center gap-1 font-mono text-xs text-amber-300 bg-blue-700/60 px-2 py-0.5 rounded-md group-hover:translate-x-0.5 transition-transform">
+            <span>SGCLEAN20</span>
+            <ChevronRight className="w-4 h-4" />
+          </div>
+        </button>
 
-      {/* 4. Action Buttons (Like, Comment, Share, Bookmark) */}
-      <div className="p-3.5 space-y-2">
+        {/* Reassurance points below CTA */}
+        <div className="flex items-center justify-center gap-4 text-[10px] text-slate-500 mt-2 font-medium">
+          <span>✓ No Contracts</span>
+          <span>✓ Pay with PayNow/Card</span>
+          <span>✓ Free Re-Clean if Unhappy</span>
+        </div>
+      </div>
+
+      {/* 6. Social Engagement Icons & Caption */}
+      <div className="px-4 pb-4 space-y-2.5 border-t border-slate-100 dark:border-slate-800 pt-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button
               onClick={toggleLike}
-              className={`transition-transform active:scale-125 cursor-pointer ${
-                isLiked ? 'text-rose-500' : 'text-slate-700 dark:text-slate-300 hover:text-rose-500'
+              className={`transition-transform active:scale-125 cursor-pointer flex items-center gap-1.5 ${
+                isLiked ? 'text-rose-500 font-bold' : 'text-slate-700 dark:text-slate-300 hover:text-rose-500'
               }`}
             >
-              <Heart className={`w-6 h-6 ${isLiked ? 'fill-rose-500' : ''}`} />
+              <Heart className={`w-5 h-5 ${isLiked ? 'fill-rose-500' : ''}`} />
+              <span className="text-xs font-mono tabular-nums">{likes.toLocaleString()}</span>
             </button>
 
             <button
               onClick={() => setShowComments(!showComments)}
-              className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+              className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer flex items-center gap-1"
             >
-              <MessageCircle className="w-6 h-6" />
+              <MessageCircle className="w-5 h-5" />
+              <span className="text-xs font-mono">48 reviews</span>
             </button>
 
             <button
@@ -127,80 +164,51 @@ export const InstagramFeedAd: React.FC<InstagramFeedAdProps> = ({
           <button
             onClick={() => setIsSaved(!isSaved)}
             className={`transition-colors cursor-pointer ${
-              isSaved ? 'text-blue-600' : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+              isSaved ? 'text-blue-600' : 'text-slate-700 dark:text-slate-300 hover:text-slate-900'
             }`}
           >
-            <Bookmark className={`w-6 h-6 ${isSaved ? 'fill-blue-600' : ''}`} />
+            <Bookmark className={`w-5 h-5 ${isSaved ? 'fill-blue-600' : ''}`} />
           </button>
         </div>
 
-        {/* Likes Count */}
-        <div className="font-bold text-xs text-slate-900 dark:text-white">
-          {likes.toLocaleString()} likes
-        </div>
-
-        {/* Ad Caption Area */}
+        {/* Clear, Readable Consumer Caption */}
         <div className="text-xs text-slate-800 dark:text-slate-200 leading-relaxed">
-          <span className="font-bold text-slate-900 dark:text-white mr-1.5">sparkclean.sg</span>
-          <span>{creative.headline}</span>
-
-          <div className="mt-1.5 whitespace-pre-line text-slate-600 dark:text-slate-300">
-            {isCaptionExpanded ? creative.primaryText : `${creative.primaryText.slice(0, 160)}...`}
+          <div className="whitespace-pre-line">
+            {isCaptionExpanded ? creative.primaryText : `${creative.primaryText.slice(0, 150)}...`}
           </div>
 
           <button
             onClick={() => setIsCaptionExpanded(!isCaptionExpanded)}
-            className="text-slate-400 dark:text-slate-500 hover:text-blue-500 font-semibold cursor-pointer text-[11px] mt-1"
+            className="text-blue-600 dark:text-blue-400 font-bold cursor-pointer text-xs mt-1 block"
           >
-            {isCaptionExpanded ? 'Show less' : 'more'}
+            {isCaptionExpanded ? 'Read less' : 'Read full details & promo'}
           </button>
         </div>
 
-        {/* Singapore Local Hashtags */}
-        <div className="flex flex-wrap gap-1 text-[11px] text-blue-600 dark:text-blue-400 font-medium pt-1">
-          <span>#singaporecleaning</span>
-          <span>#sghomes</span>
-          <span>#hdbrenovation</span>
-          <span>#sgexpats</span>
-          <span>#sparkcleansg</span>
-        </div>
-
-        {/* Customer Testimonial Preview */}
-        {creative.testimonials.length > 0 && (
-          <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80">
-            <button
-              onClick={() => setShowComments(!showComments)}
-              className="text-[11px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 font-medium cursor-pointer"
-            >
-              View all 48 verified customer reviews...
-            </button>
-
-            {showComments && (
-              <div className="mt-2 space-y-2 p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 animate-in fade-in">
-                {creative.testimonials.map((test, i) => (
-                  <div key={i} className="text-xs space-y-0.5">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-slate-900 dark:text-white">{test.author}</span>
-                      <span className="text-amber-400 text-[10px]">★★★★★</span>
-                    </div>
-                    <p className="text-[11px] text-slate-600 dark:text-slate-300 italic">
-                      "{test.quote}"
-                    </p>
-                  </div>
-                ))}
+        {/* Customer Testimonial Accordion */}
+        {showComments && (
+          <div className="mt-2 space-y-2 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-100 dark:border-slate-800 animate-in fade-in">
+            <div className="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
+              Verified Singapore Customer Reviews (4.9 / 5.0)
+            </div>
+            {creative.testimonials.map((test, i) => (
+              <div key={i} className="text-xs space-y-0.5 pb-2 border-b border-slate-200/60 dark:border-slate-700 last:border-b-0 last:pb-0">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-slate-900 dark:text-white">{test.author}</span>
+                  <span className="text-amber-400 text-xs">★★★★★</span>
+                </div>
+                <p className="text-[11px] text-slate-600 dark:text-slate-300 italic">
+                  "{test.quote}"
+                </p>
               </div>
-            )}
+            ))}
           </div>
         )}
-
-        <div className="text-[10px] text-slate-400 pt-1 font-mono">
-          2 HOURS AGO · SPONSORED CAMPAIGN
-        </div>
       </div>
 
-      {/* Toast Notification */}
+      {/* Toast Alert */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 px-4 py-2 bg-slate-900 text-white text-xs font-semibold rounded-lg shadow-xl animate-in slide-in-from-bottom-2">
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 bg-slate-900 text-white text-xs font-semibold rounded-xl shadow-2xl animate-in slide-in-from-bottom-2">
           {toastMessage}
         </div>
       )}
